@@ -9,20 +9,22 @@
             margin: 0;
             height: 100%;
             overflow: hidden;
-            background-color: #000; /* 刷新過渡時背景設為黑色 */
+            background-color: #f0f0f0; /* 將背景設為淺灰色，幫助確認 iframe 是否有載入 */
         }
         iframe {
             width: 100%;
             height: 100%;
             border: none;
+            display: block; /* 確保 iframe 是區塊元素 */
         }
     </style>
 </head>
 <body>
-    <!-- 使用您剛剛取得的 pubembed 網址 -->
+    <!-- 1. 我們將 /pubembed 手動改回原本能用的 /embed -->
+    <!-- 2. 我加上了一個簡單的 ID（myIframe）方便 JavaScript 抓取 -->
     <iframe 
-        id="googleSlides" 
-        src="https://docs.google.com/presentation/d/e/2PACX-1vQDrQd-jE4o87RzplL3IRXqyH5yjoMZIQoXQ9yeWtq2TdWvamf1Lhsx7gylNMuNsso-DNIsAMckbZ2_/pubembed?start=false&loop=false&delayms=3000" 
+        id="myIframe"
+        src="https://docs.google.com/presentation/d/e/2PACX-1vQDrQd-jE4o87RzplL3IRXqyH5yjoMZIQoXQ9yeWtq2TdWvamf1Lhsx7gylNMuNsso-DNIsAMckbZ2_/embed?start=false&loop=false&delayms=3000" 
         allowfullscreen="true" 
         mozallowfullscreen="true" 
         webkitallowfullscreen="true">
@@ -31,22 +33,22 @@
     <script>
         function refreshIframe() {
             if (navigator.onLine) {
-                const iframe = document.getElementById("googleSlides");
-                // 取得原始網址
+                const iframe = document.getElementById("myIframe");
+                
+                // 3. 我們把自動重新整理的機制變得更簡單直接
+                // 加上 t= 時間戳記，強迫它不讀取快取
                 const currentSrc = new URL(iframe.src);
-                // 加上時間戳記 (t) 強制伺服器提供最新版本，避免快取錯誤
                 currentSrc.searchParams.set('t', new Date().getTime());
                 
-                // 執行重新載入
                 iframe.src = currentSrc.toString();
-                console.log("已完成自動刷新：" + new Date().toLocaleTimeString());
+                console.log("已自動刷新");
             }
         }
 
-        // 設定每 60 秒刷新一次 (60000 毫秒)
-        setInterval(refreshIframe, 60000);
+        // 依然設定為 60 秒刷新一次
+        setInterval(refreshIframe, 60000); 
 
-        // 監聽電腦從斷線恢復連線的瞬間，立即刷新畫面
+        // 斷線重連後立即刷新
         window.addEventListener('online', refreshIframe);
     </script>
 </body>
