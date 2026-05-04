@@ -18,7 +18,6 @@
     </style>
 </head>
 <body>
-    <!-- 關鍵：改用 /embed 格式，這是針對 Browserhere 最穩定的格式 -->
     <iframe 
         id="googleSlides" 
         src="https://docs.google.com/presentation/d/e/2PACX-1vQDrQd-jE4o87RzplL3IRXqyH5yjoMZIQoXQ9yeWtq2TdWvamf1Lhsx7gylNMuNsso-DNIsAMckbZ2_/embed?start=true&loop=true&delayms=60000" 
@@ -26,17 +25,14 @@
     </iframe>
 
     <script>
-        function refreshIframe() {
-            if (navigator.onLine) {
-                const iframe = document.getElementById("googleSlides");
-                // 重新設定 src 並加上時間標籤 t，強制 Browserhere 抓取最新內容
-                const baseUrl = "https://docs.google.com/presentation/d/e/2PACX-1vQDrQd-jE4o87RzplL3IRXqyH5yjoMZIQoXQ9yeWtq2TdWvamf1Lhsx7gylNMuNsso-DNIsAMckbZ2_/embed?start=true&loop=true&delayms=60000";
-                iframe.src = baseUrl + "&t=" + new Date().getTime();
-            }
+        function refreshEntirePage() {
+            // 不再只刷新 iframe，而是直接刷新整個 StaffOut.html 網頁
+            // 這是對 Browserhere 最保險的做法，能解決連線逾時導致的黑屏
+            location.reload(true); 
         }
 
-        // 每 60 秒 (1分鐘) 自動重載一次
-        setInterval(refreshIframe, 60000);
+        // 每 60 秒刷新一次 (60000 毫秒)
+        setInterval(refreshEntirePage, 60000);
     </script>
 </body>
 </html>
