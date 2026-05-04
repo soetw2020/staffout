@@ -8,7 +8,7 @@
             margin: 0;
             height: 100%;
             overflow: hidden;
-            background-color: #000; /* 確保背景是黑色的 */
+            background-color: #000;
         }
         iframe {
             width: 100%;
@@ -18,7 +18,7 @@
     </style>
 </head>
 <body>
-    <!-- 關鍵修正：必須使用 /embed 或 /pubembed 格式，不能使用 /pub -->
+    <!-- 關鍵：改用 /embed 格式，這是針對 Browserhere 最穩定的格式 -->
     <iframe 
         id="googleSlides" 
         src="https://docs.google.com/presentation/d/e/2PACX-1vQDrQd-jE4o87RzplL3IRXqyH5yjoMZIQoXQ9yeWtq2TdWvamf1Lhsx7gylNMuNsso-DNIsAMckbZ2_/embed?start=true&loop=true&delayms=60000" 
@@ -29,14 +29,13 @@
         function refreshIframe() {
             if (navigator.onLine) {
                 const iframe = document.getElementById("googleSlides");
-                // 在網址後加上隨機參數，強迫 Chromecast 抓取最新資料
-                const currentUrl = "https://docs.google.com/presentation/d/e/2PACX-1vQDrQd-jE4o87RzplL3IRXqyH5yjoMZIQoXQ9yeWtq2TdWvamf1Lhsx7gylNMuNsso-DNIsAMckbZ2_/embed?start=true&loop=true&delayms=60000";
-                iframe.src = currentUrl + "&t=" + new Date().getTime();
-                console.log("已刷新資料");
+                // 重新設定 src 並加上時間標籤 t，強制 Browserhere 抓取最新內容
+                const baseUrl = "https://docs.google.com/presentation/d/e/2PACX-1vQDrQd-jE4o87RzplL3IRXqyH5yjoMZIQoXQ9yeWtq2TdWvamf1Lhsx7gylNMuNsso-DNIsAMckbZ2_/embed?start=true&loop=true&delayms=60000";
+                iframe.src = baseUrl + "&t=" + new Date().getTime();
             }
         }
 
-        // 每 60 秒刷新一次，抓取最新外出資料
+        // 每 60 秒 (1分鐘) 自動重載一次
         setInterval(refreshIframe, 60000);
     </script>
 </body>
