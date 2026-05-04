@@ -20,7 +20,7 @@
 <body>
     <iframe 
         id="googleSlides" 
-        src="https://docs.google.com/presentation/d/e/2PACX-1vQDrQd-jE4o87RzplL3IRXqyH5yjoMZIQoXQ9yeWtq2TdWvamf1Lhsx7gylNMuNsso-DNIsAMckbZ2_/embed?start=false&loop=false" 
+        src="https://docs.google.com/presentation/d/e/2PACX-1vQDrQd-jE4o87RzplL3IRXqyH5yjoMZIQoXQ9yeWtq2TdWvamf1Lhsx7gylNMuNsso-DNIsAMckbZ2_/pub?start=false&loop=false" 
         allowfullscreen="true" 
         mozallowfullscreen="true" 
         webkitallowfullscreen="true">
@@ -30,8 +30,8 @@
         function refreshIframe() {
             const iframe = document.getElementById("googleSlides");
             
-            // 原始簡報網址
-            const baseUrl = "https://docs.google.com/presentation/d/e/2PACX-1vQDrQd-jE4o87RzplL3IRXqyH5yjoMZIQoXQ9yeWtq2TdWvamf1Lhsx7gylNMuNsso-DNIsAMckbZ2_/embed?start=false&loop=false";
+            // 原始簡報網址 (已改為 /pub 模式)
+            const baseUrl = "https://docs.google.com/presentation/d/e/2PACX-1vQDrQd-jE4o87RzplL3IRXqyH5yjoMZIQoXQ9yeWtq2TdWvamf1Lhsx7gylNMuNsso-DNIsAMckbZ2_/pub?start=false&loop=false";
             
             // 加上時間戳記，避免電視瀏覽器讀取到舊快取
             const timestamp = new Date().getTime();
