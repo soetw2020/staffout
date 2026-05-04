@@ -26,10 +26,21 @@
         webkitallowfullscreen="true">
     </iframe>
     <script>
-        // 每 60 秒自動重新整理整個網頁 (60000 毫秒)
-        setTimeout(function() {
-            window.location.reload(true);
-        }, 60000);
+        function refreshIframe() {
+            const iframe = document.getElementById("googleSlides");
+            
+            // 您的原始網址（我把 delayms 拿掉了，因為你不需要它自動播放幻燈片）
+            const baseUrl = "https://docs.google.com/presentation/d/e/2PACX-1vQDrQd-jE4o87RzplL3IRXqyH5yjoMZIQoXQ9yeWtq2TdWvamf1Lhsx7gylNMuNsso-DNIsAMckbZ2_/embed?start=false&loop=false";
+            
+            // 加上當下時間戳記，騙過 BrowserHere 的快取機制
+            const timestamp = new Date().getTime();
+            iframe.src = baseUrl + "&t=" + timestamp;
+            
+            console.log("Iframe refreshed at: " + new Date().toLocaleTimeString());
+        }
+
+        // 設為每 3 分鐘 (180000 毫秒) 刷新一次。若要 5 分鐘請改成 300000
+        setInterval(refreshIframe, 180000);
     </script>
 </body>
 </html>
