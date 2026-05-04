@@ -2,41 +2,40 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <title>外出登記表 - 自動更新版</title>
+    <title>外出登記表 (1分鐘強制更新版)</title>
     <style>
-        html, body {
-            margin: 0;
-            height: 100%;
-            overflow: hidden;
-            background-color: #000;
-        }
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
+        html, body { margin: 0; height: 100%; overflow: hidden; background-color: #000; }
+        iframe { width: 100%; height: 100%; border: none; }
     </style>
 </head>
 <body>
-    <!-- 使用您剛才提供的連結，並建議將 start 改為 true 以便重整後自動播放 -->
+    <!-- 使用您剛取得的連結，並將 start 改為 true -->
     <iframe 
-        id="displayFrame"
+        id="googleSlides"
         src="https://docs.google.com/presentation/d/e/2PACX-1vQDrQd-jE4o87RzplL3IRXqyH5yjoMZIQoXQ9yeWtq2TdWvamf1Lhsx7gylNMuNsso-DNIsAMckbZ2_/pub?start=true&loop=true&delayms=60000" 
         allowfullscreen="true">
     </iframe>
 
     <script>
-        function refreshContent() {
-            // 對於電視與 Chromecast 瀏覽器，location.reload() 是最能解決連線錯誤的方法
-            // 這能確保抓取到您在 Google Drive 上剛存檔的最新內容
-            location.reload();
+        function forceUpdate() {
+            const iframe = document.getElementById("googleSlides");
+            const originalSrc = "https://docs.google.com/presentation/d/e/2PACX-1vQDrQd-jE4o87RzplL3IRXqyH5yjoMZIQoXQ9yeWtq2TdWvamf1Lhsx7gylNMuNsso-DNIsAMckbZ2_/pub?start=true&loop=true&delayms=60000";
+            
+            console.log("正在嘗試強制更新...");
+            
+            // 1. 先將 iframe 的 src 清空為空白，強迫瀏覽器釋放記憶體和舊連線
+            iframe.src = ""; 
+            
+            // 2. 延遲 500 毫秒後，再重新設定新的 src
+            // 加入時間戳記 (t)，強迫 Google 伺服器回傳最新版本而非快取
+            setTimeout(() => {
+                iframe.src = originalSrc + "&t=" + new Date().getTime();
+                console.log("更新指令已發送");
+            }, 500); 
         }
 
-        // 設定 300000 毫秒 (5 分鐘) 執行一次全網頁刷新
-        // 如果您希望更即時，可以改為 60000 (1 分鐘)
-        setInterval(refreshContent, 60000);
-        
-        //console.log("自動更新機制已啟動，每 5 分鐘刷新一次內容。");
+        // 每 60000 毫秒 (1分鐘) 執行一次強制更新
+        setInterval(forceUpdate, 60000); 
     </script>
 </body>
 </html>
