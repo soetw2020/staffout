@@ -26,18 +26,10 @@
         webkitallowfullscreen="true">
     </iframe>
     <script>
-        // 定時刷新 iframe
-        function refreshIframe() {
-            const iframe = document.getElementById("googleSlides");
-            const currentSrc = iframe.src;
-            iframe.src = ""; // 清空 src 以觸發刷新
-            setTimeout(() => {
-                iframe.src = currentSrc; // 恢復原本 src
-            }, 100); // 短暫延遲以完成刷新
-        }
-
-        // 每 60 秒自動刷新
-        setInterval(refreshIframe, 60000);
+        // 每 60 秒自動重新整理整個網頁 (60000 毫秒)
+        setTimeout(function() {
+            window.location.reload(true);
+        }, 60000);
     </script>
 </body>
 </html>
