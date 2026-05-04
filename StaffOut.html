@@ -9,47 +9,39 @@
             margin: 0;
             height: 100%;
             overflow: hidden;
-            background-color: #f0f0f0; /* 將背景設為淺灰色，幫助確認 iframe 是否有載入 */
         }
         iframe {
             width: 100%;
             height: 100%;
-            border: none;
-            display: block; /* 確保 iframe 是區塊元素 */
+            border: none; /* 移除邊框 */
         }
     </style>
 </head>
 <body>
-    <!-- 1. 我們將 /pubembed 手動改回原本能用的 /embed -->
-    <!-- 2. 我加上了一個簡單的 ID（myIframe）方便 JavaScript 抓取 -->
     <iframe 
-        id="myIframe"
-        src="https://docs.google.com/presentation/d/e/2PACX-1vQDrQd-jE4o87RzplL3IRXqyH5yjoMZIQoXQ9yeWtq2TdWvamf1Lhsx7gylNMuNsso-DNIsAMckbZ2_/embed?start=false&loop=false&delayms=3000" 
+        id="googleSlides" 
+        src="https://docs.google.com/presentation/d/e/2PACX-1vQDrQd-jE4o87RzplL3IRXqyH5yjoMZIQoXQ9yeWtq2TdWvamf1Lhsx7gylNMuNsso-DNIsAMckbZ2_/pubembed?start=false&loop=false&delayms=3000" 
+        frameborder="0" 
+        width="960" 
+        height="569" 
         allowfullscreen="true" 
         mozallowfullscreen="true" 
         webkitallowfullscreen="true">
     </iframe>
 
     <script>
+        // 定時刷新 iframe
         function refreshIframe() {
-            if (navigator.onLine) {
-                const iframe = document.getElementById("myIframe");
-                
-                // 3. 我們把自動重新整理的機制變得更簡單直接
-                // 加上 t= 時間戳記，強迫它不讀取快取
-                const currentSrc = new URL(iframe.src);
-                currentSrc.searchParams.set('t', new Date().getTime());
-                
-                iframe.src = currentSrc.toString();
-                console.log("已自動刷新");
-            }
+            const iframe = document.getElementById("googleSlides");
+            const currentSrc = iframe.src;
+            iframe.src = ""; // 清空 src 以觸發刷新
+            setTimeout(() => {
+                iframe.src = currentSrc; // 恢復原本 src
+            }, 100); // 短暫延遲以完成刷新
         }
 
-        // 依然設定為 60 秒刷新一次
-        setInterval(refreshIframe, 60000); 
-
-        // 斷線重連後立即刷新
-        window.addEventListener('online', refreshIframe);
+        // 每 60 秒自動刷新
+        setInterval(refreshIframe, 60000);
     </script>
 </body>
 </html>
