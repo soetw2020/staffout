@@ -9,38 +9,32 @@
             margin: 0;
             height: 100%;
             overflow: hidden;
+            background-color: #000;
         }
         iframe {
             width: 100%;
             height: 100%;
-            border: none; /* 移除邊框 */
+            border: none;
         }
     </style>
 </head>
 <body>
+    <!-- 將 pubembed 改回 embed，增加對 Chromecast 瀏覽器的相容性 -->
     <iframe 
         id="googleSlides" 
-        src="https://docs.google.com/presentation/d/e/2PACX-1vQDrQd-jE4o87RzplL3IRXqyH5yjoMZIQoXQ9yeWtq2TdWvamf1Lhsx7gylNMuNsso-DNIsAMckbZ2_/pubembed?start=false&loop=false&delayms=3000" 
-        frameborder="0" 
-        width="960" 
-        height="569" 
-        allowfullscreen="true" 
-        mozallowfullscreen="true" 
-        webkitallowfullscreen="true">
+        src="https://docs.google.com/presentation/d/e/2PACX-1vQDrQd-jE4o87RzplL3IRXqyH5yjoMZIQoXQ9yeWtq2TdWvamf1Lhsx7gylNMuNsso-DNIsAMckbZ2_/embed?start=false&loop=false&delayms=3000" 
+        allowfullscreen="true">
     </iframe>
 
     <script>
-        // 定時刷新 iframe
         function refreshIframe() {
-            const iframe = document.getElementById("googleSlides");
-            const currentSrc = iframe.src;
-            iframe.src = ""; // 清空 src 以觸發刷新
-            setTimeout(() => {
-                iframe.src = currentSrc; // 恢復原本 src
-            }, 100); // 短暫延遲以完成刷新
+            // 在 Chromecast 上，直接強制瀏覽器重新載入整個頁面是最徹底的做法
+            // 這樣能有效解決 ERR_INVALID_RESPONSE 
+            location.reload(); 
         }
 
-        // 每 60 秒自動刷新
+        // 每 60 秒刷新一次
+        // 建議您如果畫面變動不大，可以試著改為 300000 (五分鐘) 會更穩定
         setInterval(refreshIframe, 60000);
     </script>
 </body>
