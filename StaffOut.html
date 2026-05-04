@@ -2,8 +2,7 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>外出登記表</title>
+    <title>外出登記表 - 自動更新版</title>
     <style>
         html, body {
             margin: 0;
@@ -19,23 +18,25 @@
     </style>
 </head>
 <body>
-    <!-- 將 pubembed 改回 embed，增加對 Chromecast 瀏覽器的相容性 -->
+    <!-- 使用您剛才提供的連結，並建議將 start 改為 true 以便重整後自動播放 -->
     <iframe 
-        id="googleSlides" 
-        src="https://docs.google.com/presentation/d/e/2PACX-1vQDrQd-jE4o87RzplL3IRXqyH5yjoMZIQoXQ9yeWtq2TdWvamf1Lhsx7gylNMuNsso-DNIsAMckbZ2_/embed?start=false&loop=false&delayms=3000" 
+        id="displayFrame"
+        src="https://docs.google.com/presentation/d/e/2PACX-1vQDrQd-jE4o87RzplL3IRXqyH5yjoMZIQoXQ9yeWtq2TdWvamf1Lhsx7gylNMuNsso-DNIsAMckbZ2_/pub?start=true&loop=true&delayms=60000" 
         allowfullscreen="true">
     </iframe>
 
     <script>
-        function refreshIframe() {
-            // 在 Chromecast 上，直接強制瀏覽器重新載入整個頁面是最徹底的做法
-            // 這樣能有效解決 ERR_INVALID_RESPONSE 
-            location.reload(); 
+        function refreshContent() {
+            // 對於電視與 Chromecast 瀏覽器，location.reload() 是最能解決連線錯誤的方法
+            // 這能確保抓取到您在 Google Drive 上剛存檔的最新內容
+            location.reload();
         }
 
-        // 每 60 秒刷新一次
-        // 建議您如果畫面變動不大，可以試著改為 300000 (五分鐘) 會更穩定
-        setInterval(refreshIframe, 60000);
+        // 設定 300000 毫秒 (5 分鐘) 執行一次全網頁刷新
+        // 如果您希望更即時，可以改為 60000 (1 分鐘)
+        setInterval(refreshContent, 60000);
+        
+        //console.log("自動更新機制已啟動，每 5 分鐘刷新一次內容。");
     </script>
 </body>
 </html>
